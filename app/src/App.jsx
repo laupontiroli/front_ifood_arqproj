@@ -9,17 +9,20 @@ import { EdicaoEntregador } from './Entregador/EdicaoEntregador'
 import { ExclusaoEntregador } from './Entregador/ExclusaoEntregador'
 import { ListarEntregador } from './Entregador/ListarEntregador'
 import { SelecionaEntregador } from './Entregador/SelecionaEntregador'
+import { ResponsiveAppBar } from './components/ResponsiveBar'
+
 
 
 function App() {
   return (
     <>
+      <ResponsiveAppBar></ResponsiveAppBar>
       <Routes>
-            <Route path='/cadastro_entregador' element={<CadastroEntregador />} />
-            <Route path='/edicao_entregador' element={<EdicaoEntregador/>} />
-            <Route path='/exclusao_entregador' element={<ExclusaoEntregador/>} />
-            <Route path='/listar_entregador' element={<ListarEntregador/>} />
-            <Route path='/seleciona_entregador' element={<SelecionaEntregador/>} />
+            <Route path='/cadastroEntregador' element={<CadastroEntregador />} />
+            <Route path='/edicaoEntregador' element={<EdicaoEntregador/>} />
+            <Route path='/exclusaoEntregador' element={<ExclusaoEntregador/>} />
+            <Route path='/listarEntregador' element={<ListarEntregador/>} />
+            <Route path='/selecionaEntregador' element={<SelecionaEntregador/>} />
       </Routes>
     </>
   )
