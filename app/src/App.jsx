@@ -1,9 +1,5 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import { Link, Route, Routes } from 'react-router-dom'
-import { Grid } from '@mui/material'
+import { Route, Routes } from 'react-router-dom'
 import { CadastroEntregador } from './Entregador/CadastroEntregador'
 import { EdicaoEntregador } from './Entregador/EdicaoEntregador'
 import { ExclusaoEntregador } from './Entregador/ExclusaoEntregador'
@@ -18,7 +14,7 @@ import * as React from 'react';
 function App() {
   return (
     <>
-      <ResponsiveAppBar ></ResponsiveAppBar>
+      <ResponsiveAppBar></ResponsiveAppBar>
       <Routes>
             <Route path='/cadastroEntregador' element={<CadastroEntregador />} />
             <Route path='/edicaoEntregador' element={<EdicaoEntregador/>} />

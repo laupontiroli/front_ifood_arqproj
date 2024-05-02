@@ -6,9 +6,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
-
-import { Link, Route, Routes } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom';
+import { Link} from 'react-router-dom'
 
 export function ResponsiveAppBar() {
   const pages = ['Cadastrar', 'Listar', 'Editar', 'Excluir', 'Ver Pedidos'];
@@ -21,8 +19,8 @@ export function ResponsiveAppBar() {
   };
 
     return (
-      <AppBar position="static">
-        <Container sx={{ position: 'fixed', width: '100%', background: 'white', top: 0, left: 0, color: 'black' }}>
+      <AppBar sx={{background:'white'}}>
+        <Container sx={{position:'flex', width: '100vw', background: 'white', top: 0, left: 0, color: 'black' }}>
           <Toolbar disableGutters>
             <DeliveryDiningIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
             <Link to='/'>
