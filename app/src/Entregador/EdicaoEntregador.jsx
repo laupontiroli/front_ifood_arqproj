@@ -83,6 +83,16 @@ export function EdicaoEntregador() {
     </Fragment>
   );
 
+  const clickManager = (atualizar) => {
+  
+    // Verifica se o botão clicado é o botão "Atualizar"
+    if (atualizar) {
+      clickAtualizar();
+  }
+    if (!atualizar) {
+      getEntregador();
+    }
+  }
   const clickAtualizar = () => {
     const data = {
       'status': status,
@@ -90,7 +100,7 @@ export function EdicaoEntregador() {
       'precoViagem': preco,
     };
 
-    fetch('http://localhost:8080/entregador/'+ toString(cpf), {
+    fetch('http://localhost:8080/entregador/'+ cpf, {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
@@ -122,10 +132,10 @@ export function EdicaoEntregador() {
       setPreco(responseObject.precoViagem);
       setVeiculo(responseObject.tipoVeiculo);
       setOpen(true);
-      setMessage("Dados do entregador atualizados");
+      setMessage("Entregador encontrado");
     } catch (error) {
       setOpen(true);
-      setMessage(responseObject.message);
+      setMessage(responseObject);
     }
   };
   
@@ -162,7 +172,7 @@ export function EdicaoEntregador() {
               key={index}
               onClick={() => {
                 setCpf(cpf);
-                getEntregador();
+                clickManager(false);
               }}
             >
               {cpf}
@@ -215,7 +225,7 @@ export function EdicaoEntregador() {
           }}
         />
         </div>
-        <Button id='atualizar' variant="outlined" onClick={clickAtualizar}>Atualizar</Button>
+        <Button id='atualizar' variant="outlined" onClick={() => clickManager(true)}>Atualizar</Button>
         <Snackbar
           open={open}
           autoHideDuration={6000}
