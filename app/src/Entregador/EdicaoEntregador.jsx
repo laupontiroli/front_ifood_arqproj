@@ -17,9 +17,9 @@ const SearchBar = ({ setSearchQuery, setShowResult }) => (
       variant="outlined"
       placeholder="Search..."
       size="small"
-      sx={{ top: 10, right: 10, width: '500px' }}
+      sx={{ top: 50, right: 10, width: '500px' }}
     />
-    <IconButton type="submit" aria-label="search" sx={{ marginTop: 3 }}>
+    <IconButton type="submit" aria-label="search" sx={{ marginTop: 13 }}>
       <SearchIcon style={{ fill: "black" }} />
     </IconButton>
   </form>
@@ -29,6 +29,7 @@ export function EdicaoEntregador() {
   const [dataList, setDataList] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [showResult, setShowResult] = useState(false);
+  const [showEditor, setShowEditor] = useState(false);
   const [veiculo, setVeiculo] = useState("");
   const [preco, setPreco] = useState("");
   const [open, setOpen] = useState(false);
@@ -83,14 +84,13 @@ export function EdicaoEntregador() {
     </Fragment>
   );
 
-  const clickManager = (atualizar) => {
-  
+  const clickManager = (atualizar,cpf) => {
     // Verifica se o botão clicado é o botão "Atualizar"
     if (atualizar) {
       clickAtualizar();
   }
     if (!atualizar) {
-      getEntregador();
+      getEntregador(cpf);
     }
   }
   const clickAtualizar = () => {
@@ -118,9 +118,9 @@ export function EdicaoEntregador() {
     });
   };
 
-  const getEntregador = async () => {
+  const getEntregador = async (cpf_) => {
     try {
-      const response = await fetch('http://localhost:8080/entregador/' + cpf, {
+      const response = await fetch('http://localhost:8080/entregador/' + cpf_, {
         method: 'GET',
       });
       if (!response.ok) {
@@ -131,6 +131,8 @@ export function EdicaoEntregador() {
       setStatus(responseObject.status);
       setPreco(responseObject.precoViagem);
       setVeiculo(responseObject.tipoVeiculo);
+      setCpf(cpf_)
+      setShowEditor(true)
       setOpen(true);
       setMessage("Entregador encontrado");
     } catch (error) {
@@ -142,12 +144,23 @@ export function EdicaoEntregador() {
 
   return (
     <div style={{ display: "flex", alignSelf: "left", justifyContent: "left", flexDirection: "column", padding: 20 }}>
+            <h3 style={{
+            position: 'fixed',
+            top: 100,
+            right: '38vw',
+            padding: '10px',
+            marginTop: '10px',
+            color: 'black',
+
+            }}>
+            Selecione o entregador para editar os dados 
+            </h3>  
       <SearchBar setSearchQuery={setSearchQuery} setShowResult={setShowResult} />
       {showResult && (
         <div style={{
           textAlign: "left",
           position: 'fixed',
-          top: 120,
+          top: 200,
           right: '33vw',
           padding: '10px',
           marginTop: '10px',
@@ -171,8 +184,7 @@ export function EdicaoEntregador() {
               }}
               key={index}
               onClick={() => {
-                setCpf(cpf);
-                clickManager(false);
+                clickManager(false,cpf);
               }}
             >
               {cpf}
@@ -180,7 +192,7 @@ export function EdicaoEntregador() {
           ))}
         </div>
       )}
-      <Box
+      {showEditor && (<Box
         component="form"
         sx={{
           '& .MuiTextField-root': { m: 1, width: '25ch' },
@@ -233,7 +245,7 @@ export function EdicaoEntregador() {
           message={message}
           action={action}
         ></Snackbar>
-      </Box>
+      </Box>)}
     </div>
   );
 }
