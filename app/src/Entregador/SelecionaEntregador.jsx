@@ -59,6 +59,33 @@ export function SelecionaEntregador() {
       }
     };
 
+    const getPedido = async (cpf_) => {
+        try {
+          const response = await fetch('http://localhost:8080/delivery?deliverymanCpf=' + cpf_, {
+            method: 'GET',
+          });
+          if (!response.ok) {
+            throw new Error(await response.json());
+          }
+          const responseObject = await response.json();
+          setStartDate(responseObject.startDate);
+          setOrigin(responseObject.origin);
+          setDestination(responseObject.destination);
+          setTravelHours(responseObject.travelHours);
+          setTravelKm(responseObject.travelKm);
+          setTotalPrice(responseObject.totalPrice);
+          setStatus(responseObject.status);
+          setDeliveryManCpf(cpf_);
+          setShowOrders(true);
+          setShowResult(false);
+          setOpen(true);
+          setMessage("Pedido encontrado");
+        } catch (error) {
+          setOpen(true);
+          setMessage(responseObject);
+        }
+      };
+
     const getEntregador = async (cpf_) => {
     try {
       const response = await fetch('http://localhost:8080/entregador/' + cpf_, {
