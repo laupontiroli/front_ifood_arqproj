@@ -13,7 +13,7 @@ const SearchBar = ({ setSearchQuery, setShowResult }) => (
         setSearchQuery(e.target.value);
         setShowResult(e.target.value.length > 0);
       }}
-      label="Digite o nome do entregador"
+      label="Digite o CPF do entregador"
       variant="outlined"
       placeholder="Search..."
       size="small"
