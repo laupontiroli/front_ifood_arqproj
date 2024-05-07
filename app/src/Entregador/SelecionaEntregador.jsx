@@ -75,6 +75,7 @@ export function SelecionaEntregador() {
       }
       setCpf(cpf_);
       setShowOrders(true);
+      setShowResult(false);
       setOpen(true);
       setMessage("Entregador encontrado");
     } catch (error) {

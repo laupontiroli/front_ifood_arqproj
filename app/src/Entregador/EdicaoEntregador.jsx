@@ -133,6 +133,7 @@ export function EdicaoEntregador() {
       setVeiculo(responseObject.tipoVeiculo);
       setCpf(cpf_)
       setShowEditor(true)
+      setShowResult(false);
       setOpen(true);
       setMessage("Entregador encontrado");
     } catch (error) {
