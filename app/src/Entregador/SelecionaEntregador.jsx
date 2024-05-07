@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { Button, IconButton, Snackbar, Table } from '@mui/material';
+import { Button, IconButton, Snackbar, Table, TableContainer, TableHead, TableBody, TableCell, TableRow, Paper } from '@mui/material';
 import SearchIcon from "@mui/icons-material/Search";
 import TextField from "@mui/material/TextField";
 import Box from '@mui/material/Box';
@@ -32,13 +32,20 @@ export function SelecionaEntregador() {
     const [showResult, setShowResult] = useState(false);
     const [showOrders, setShowOrders] = useState(false);
     const [cpf, setCpf] = useState("");
-    const [nome, setNome] = useState("")
-    const [status, setStatus] = useState("")
-    const [colorStatus, setColorStatus] = useState('#AFE1AF')
+    const [nome, setNome] = useState("");
+    const [status, setStatus] = useState("");
+    const [colorStatus, setColorStatus] = useState('#AFE1AF');
+    const [startDate, setStartDate] = useState("");
+    const [origin, setOrigin] = useState("");
+    const [destination, setDestination] = useState("");
+    const [travelHours, setTravelHours] = useState("");
+    const [travelKm, setTravelKm] = useState("");
+    const [totalPrice, setTotalPrice] = useState("");
+    const [deliveryManCpf, setDeliveryManCpf] = useState("");
+    const [open, setOpen] = useState(false);
+    const [message, setMessage] = useState("");
+    const [entregas, setEntregas] = useState([]); // Estado para armazenar os detalhes da entrega
 
-  
-  
-  
     useEffect(() => {
       fetchData();
     }, []);
@@ -80,6 +87,9 @@ export function SelecionaEntregador() {
           setShowResult(false);
           setOpen(true);
           setMessage("Pedido encontrado");
+
+          // Definir os detalhes da entrega no estado
+          setEntregas([responseObject]);
         } catch (error) {
           setOpen(true);
           setMessage(responseObject);
@@ -185,21 +195,56 @@ export function SelecionaEntregador() {
             </div>
         )} 
         {showOrders && (
-        <div style={{ backgroundColor: colorStatus, padding: '10px', borderRadius:'30px'}}>
-            <table>
-            <tr>
-                <th>Nome: </th>
-                <td>{nome}</td>
-                <td></td>
-                <th>Cpf: </th>
-                <td>{cpf}</td>
-                <td></td>
-                <th>Status: </th>
-                <td>{status}</td>
-            </tr>
-            </table>
+        <div>
+          <div style={{ backgroundColor: colorStatus, padding: '10px', borderRadius:'30px', marginBottom: '20px' }}>
+              <table>
+                <tbody>
+                  <tr>
+                      <th>Nome: </th>
+                      <td>{nome}</td>
+                      <td></td>
+                      <th>Cpf: </th>
+                      <td>{cpf}</td>
+                      <td></td>
+                      <th>Status: </th>
+                      <td>{status}</td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+          <div>
+            <TableContainer component={Paper}>
+              <Table>
+                  <TableHead>
+                      <TableRow>
+                          <TableCell>Data do Pedido</TableCell>
+                          <TableCell>Origem</TableCell>
+                          <TableCell>Destino</TableCell>
+                          <TableCell>Tempo de Entrega</TableCell>
+                          <TableCell>Distância</TableCell>
+                          <TableCell>Preço Total</TableCell>
+                          <TableCell>Status</TableCell>
+                      </TableRow>
+                  </TableHead>
+                  <TableBody>
+                      {entregas.map(entrega => (
+                          <TableRow key={entrega.id}>
+                              <TableCell>{entrega.startDate}</TableCell>
+                              <TableCell>{entrega.origin}</TableCell>
+                              <TableCell>{entrega.destination}</TableCell>
+                              <TableCell>{entrega.travelHours}</TableCell>
+                              <TableCell>{entrega.travelKm}</TableCell>
+                              <TableCell>{entrega.totalPrice}</TableCell>
+                              <TableCell>{entrega.status}</TableCell>
+                          </TableRow>
+                      ))}
+                  </TableBody>
+              </Table>
+            </TableContainer>
+          </div>
         </div>
         )}
         </>
     )
 }
+
