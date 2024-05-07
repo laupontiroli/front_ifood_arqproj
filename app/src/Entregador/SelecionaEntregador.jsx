@@ -35,16 +35,9 @@ export function SelecionaEntregador() {
     const [nome, setNome] = useState("");
     const [status, setStatus] = useState("");
     const [colorStatus, setColorStatus] = useState('#AFE1AF');
-    const [startDate, setStartDate] = useState("");
-    const [origin, setOrigin] = useState("");
-    const [destination, setDestination] = useState("");
-    const [travelHours, setTravelHours] = useState("");
-    const [travelKm, setTravelKm] = useState("");
-    const [totalPrice, setTotalPrice] = useState("");
-    const [deliveryManCpf, setDeliveryManCpf] = useState("");
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState("");
-    const [entregas, setEntregas] = useState([]); // Estado para armazenar os detalhes da entrega
+    const [entregas, setEntregas] = useState([]); 
 
     useEffect(() => {
       fetchData();
@@ -68,28 +61,20 @@ export function SelecionaEntregador() {
 
     const getPedido = async (cpf_) => {
         try {
-          const response = await fetch('http://localhost:8080/delivery?deliverymanCpf=' + cpf_, {
+          const response = await fetch('http://localhost:8081/delivery?deliverymanCpf=' + cpf_, {
             method: 'GET',
           });
           if (!response.ok) {
             throw new Error(await response.json());
           }
           const responseObject = await response.json();
-          setStartDate(responseObject.startDate);
-          setOrigin(responseObject.origin);
-          setDestination(responseObject.destination);
-          setTravelHours(responseObject.travelHours);
-          setTravelKm(responseObject.travelKm);
-          setTotalPrice(responseObject.totalPrice);
-          setStatus(responseObject.status);
-          setDeliveryManCpf(cpf_);
           setShowOrders(true);
           setShowResult(false);
           setOpen(true);
           setMessage("Pedido encontrado");
 
           // Definir os detalhes da entrega no estado
-          setEntregas([responseObject]);
+          setEntregas(responseObject);
         } catch (error) {
           setOpen(true);
           setMessage(responseObject);
@@ -115,6 +100,7 @@ export function SelecionaEntregador() {
       setShowResult(false);
       setOpen(true);
       setMessage("Entregador encontrado");
+      getPedido(cpf_);
     } catch (error) {
       setOpen(true);
       setMessage(responseObject);
@@ -187,6 +173,7 @@ export function SelecionaEntregador() {
                 key={index}
                 onClick={() => {
                     getEntregador(cpf);
+
                 }}
                 >
                 {cpf}
